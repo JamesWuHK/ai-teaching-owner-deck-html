@@ -428,23 +428,45 @@ export const slides = [
   {
     number: '09',
     eyebrow: 'PLAN',
-    title: '90天计划',
-    summary: '把 90 天执行节奏和最终交付结果放在一起看，会更容易评估实施安排是否合理',
+    title: '项目交付总结',
+    summary: '把交付标的、价格结构、90 天安排和客户价值放在一起看，项目边界会更清楚',
     variant: 'decision',
     bodyHtml: `
+      <div class="pricing-grid pricing-grid--compact">
+        <article class="pricing-card">
+          <div class="pricing-card__price">60 万</div>
+          <h3>视频交付</h3>
+          <p>交付 1000 个教学短视频成品，按确认后的样片标准分批生产、分批验收。</p>
+          <p>价值是先解决业务节点交付，直接形成可使用的内容成果。</p>
+        </article>
+        <article class="pricing-card">
+          <div class="pricing-card__price">30 万</div>
+          <h3>平台交付</h3>
+          <p>交付 1 套可上线的视频生产平台，覆盖故事、脚本、keyframe 图片、clip 到成片视频的全流程。</p>
+          <p>价值是把批量生成、审核、版本管理和导出能力沉淀到内部。</p>
+        </article>
+        <article class="pricing-card">
+          <div class="pricing-card__price">0 万</div>
+          <h3>培训赋能</h3>
+          <p>交付 1 套教研团队培训赋能计划，按团队能力安排 4～8 次课，并同步 SOP、操作手册和示范案例。</p>
+          <p>该部分纳入项目实施配套支持，不单独计费。</p>
+        </article>
+      </div>
       <div class="decision-grid">
         <div class="decision-column">
           <div class="deliverable-box">
-            <h3>判断结论</h3>
-            <p>按 3 个月交付周期，最终交付给客户的是 1000 个视频、1 个视频生产平台，以及 1 个教研团队培训赋能计划，按团队能力安排 4～8 次课，整体价格 90 万。</p>
-            <p>交付范围覆盖从故事、脚本、keyframe 图片、clip 到成片视频的全流程，也会把可复用、可参考、可学习的方法过程一起交付。</p>
+            <h3>总价、总交付与客户价值</h3>
+            <p>项目总价 90 万，最终交付给客户的是 1000 个视频、1 套可上线的视频生产平台，以及 1 套教研团队培训赋能方案。</p>
+            <p>客户拿到的不只是阶段成品，也包括后续继续生产所需的平台能力、SOP、模板、参考样例和团队使用能力。</p>
           </div>
         </div>
         <div class="decision-column">
-          <div class="timeline-grid timeline-grid--compact">
-            ${renderTimelineCards()}
+          <div class="deliverable-box">
+            <h3>90天执行安排</h3>
+            <p>第 1 月：完成样片标准确认，跑通生产路径和审核闭环，首批 200 个视频交付。</p>
+            <p>第 2 月：进入稳定批量生产阶段，累计完成 650 个视频交付。</p>
+            <p>第 3 月：完成剩余内容与返修，平台正式上线，累计完成 1000 个视频交付，并完成团队实操交接。</p>
           </div>
-          <div class="foot-note">项目结束后，内部保留的不只是 1000 个视频，也包括 1 个 AI 平台和 1 支具备 AI 协同能力的团队。</div>
         </div>
       </div>
     `,

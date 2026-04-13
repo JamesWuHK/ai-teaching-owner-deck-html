@@ -80,7 +80,7 @@ test('actual deck renders the approved 9-slide structure', () => {
   assert.match(html, /模块一：1000\+ 个视频如何稳定交付/);
   assert.match(html, /平台与团队赋能/);
   assert.match(html, /投入产出判断/);
-  assert.match(html, /90天计划/);
+  assert.match(html, /项目交付总结/);
   assert.doesNotMatch(html, /<h1 class="slide-title">全栈解决方案<\/h1>/);
   assert.doesNotMatch(html, /<h1 class="slide-title">投入产出与落地计划<\/h1>/);
 });
@@ -133,7 +133,7 @@ test('actual deck splits decision content into roi and plan pages', () => {
   assert.match(html, /基于通用AI工具内部摸索/);
   assert.match(html, /传统外包/);
   assert.match(html, /全栈解决方案/);
-  assert.match(html, /90天计划/);
+  assert.match(html, /项目交付总结/);
   assert.match(html, /首批 200 个视频交付/);
   assert.match(html, /累计完成 1000 个视频交付/);
   assert.match(html, /平台正式上线/);
@@ -142,21 +142,27 @@ test('actual deck splits decision content into roi and plan pages', () => {
   assert.doesNotMatch(slide03Html, /过百万/);
   assert.doesNotMatch(slide08Html, /万\+/);
   assert.doesNotMatch(slide08Html, /100 万\+/);
-  assert.doesNotMatch(slide08Html, /价格 90 万/);
-  assert.doesNotMatch(slide08Html, /1000 个视频、1 个视频生产平台/);
+  assert.doesNotMatch(slide08Html, /项目总价 90 万/);
+  assert.doesNotMatch(slide08Html, /1 套可上线的视频生产平台/);
   assert.doesNotMatch(slide08Html, /4～8 次课/);
   assert.doesNotMatch(slide08Html, /故事、脚本、keyframe 图片、clip 到成片视频/);
   assert.doesNotMatch(slide08Html, /60 万/);
   assert.doesNotMatch(slide08Html, /30 万/);
-  assert.match(slide09Html, /价格 90 万/);
-  assert.match(slide09Html, /1000 个视频、1 个视频生产平台/);
+  assert.match(slide09Html, /项目交付总结/);
+  assert.match(slide09Html, /项目总价 90 万/);
+  assert.match(slide09Html, /60 万/);
+  assert.match(slide09Html, /30 万/);
+  assert.match(slide09Html, /0 万/);
+  assert.match(slide09Html, /视频交付/);
+  assert.match(slide09Html, /平台交付/);
+  assert.match(slide09Html, /培训赋能/);
+  assert.match(slide09Html, /1000 个教学短视频成品/);
+  assert.match(slide09Html, /1 套可上线的视频生产平台/);
   assert.match(slide09Html, /4～8 次课/);
   assert.match(slide09Html, /故事、脚本、keyframe 图片、clip 到成片视频/);
-  assert.match(slide09Html, /判断结论/);
+  assert.match(slide09Html, /总价、总交付与客户价值/);
+  assert.match(slide09Html, /90天执行安排/);
   assert.doesNotMatch(slide09Html, /报价与90天计划/);
-  assert.doesNotMatch(slide09Html, /60 万/);
-  assert.doesNotMatch(slide09Html, /30 万/);
-  assert.doesNotMatch(slide09Html, /团队培训支持纳入项目实施范围/);
 });
 
 test('project goals page merges goals with overall solution advice', () => {
@@ -198,16 +204,18 @@ test('pptx export creates an editable 9-slide deck with key business copy', asyn
   assert.match(slide8Xml, /投入产出判断/);
   assert.match(slide8Xml, /基于通用AI工具内部摸索/);
   assert.match(slide8Xml, /全栈解决方案/);
-  assert.doesNotMatch(slide8Xml, /价格 90 万/);
+  assert.doesNotMatch(slide8Xml, /项目总价 90 万/);
   assert.doesNotMatch(slide8Xml, /4～8 次课/);
-  assert.match(slide9Xml, /90天计划/);
+  assert.match(slide9Xml, /项目交付总结/);
   assert.match(slide9Xml, /首批 200 个视频交付/);
-  assert.match(slide9Xml, /价格 90 万/);
+  assert.match(slide9Xml, /项目总价 90 万/);
+  assert.match(slide9Xml, /60 万/);
+  assert.match(slide9Xml, /30 万/);
+  assert.match(slide9Xml, /0 万/);
   assert.match(slide9Xml, /4～8 次课/);
-  assert.match(slide9Xml, /判断结论/);
+  assert.match(slide9Xml, /总价、总交付与客户价值/);
+  assert.match(slide9Xml, /90天执行安排/);
   assert.doesNotMatch(slide8Xml, /100 万\+/);
-  assert.doesNotMatch(slide9Xml, /60 万用于 1000 个视频交付/);
-  assert.doesNotMatch(slide9Xml, /30 万用于平台开发/);
 });
 
 test('theme keeps the original 16:9-like desktop shell sizing and 1280px breakpoint', () => {
