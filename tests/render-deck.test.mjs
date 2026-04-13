@@ -143,7 +143,10 @@ test('actual deck splits decision content into roi and plan pages', () => {
   assert.doesNotMatch(slide03Html, /过百万/);
   assert.doesNotMatch(slide08Html, /万\+/);
   assert.doesNotMatch(slide08Html, /100 万\+/);
-  assert.doesNotMatch(slide08Html, /90 万/);
+  assert.match(slide08Html, /价格 90 万/);
+  assert.match(slide08Html, /1000 个视频、1 个视频生产平台/);
+  assert.match(slide08Html, /4～8 次课/);
+  assert.match(slide08Html, /故事、脚本、keyframe 图片、clip 到成片视频/);
   assert.doesNotMatch(slide08Html, /60 万/);
   assert.doesNotMatch(slide08Html, /30 万/);
   assert.doesNotMatch(slide09Html, /报价与90天计划/);
@@ -191,11 +194,12 @@ test('pptx export creates an editable 9-slide deck with key business copy', asyn
   assert.match(slide8Xml, /投入产出判断/);
   assert.match(slide8Xml, /基于通用AI工具内部摸索/);
   assert.match(slide8Xml, /全栈解决方案/);
+  assert.match(slide8Xml, /价格 90 万/);
+  assert.match(slide8Xml, /4～8 次课/);
   assert.match(slide9Xml, /90天计划/);
   assert.match(slide9Xml, /首批 200 个视频交付/);
   assert.match(slide9Xml, /后续继续迭代所需的基础能力/);
   assert.doesNotMatch(slide8Xml, /100 万\+/);
-  assert.doesNotMatch(slide8Xml, /90 万/);
   assert.doesNotMatch(slide9Xml, /60 万用于 1000 个视频交付/);
   assert.doesNotMatch(slide9Xml, /30 万用于平台开发/);
 });
