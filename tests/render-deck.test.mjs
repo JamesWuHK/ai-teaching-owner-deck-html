@@ -152,7 +152,7 @@ test('actual deck splits decision content into roi and plan pages', () => {
   assert.match(slide09Html, /项目总价 90 万/);
   assert.match(slide09Html, /60 万/);
   assert.match(slide09Html, /30 万/);
-  assert.match(slide09Html, /0 万/);
+  assert.doesNotMatch(slide09Html, /pricing-card__price">0 万</);
   assert.match(slide09Html, /视频交付/);
   assert.match(slide09Html, /平台交付/);
   assert.match(slide09Html, /培训赋能/);
@@ -211,7 +211,7 @@ test('pptx export creates an editable 9-slide deck with key business copy', asyn
   assert.match(slide9Xml, /项目总价 90 万/);
   assert.match(slide9Xml, /60 万/);
   assert.match(slide9Xml, /30 万/);
-  assert.match(slide9Xml, /0 万/);
+  assert.doesNotMatch(slide9Xml, /<a:t>0 万<\/a:t>/);
   assert.match(slide9Xml, /4～8 次课/);
   assert.match(slide9Xml, /总价、总交付与客户价值/);
   assert.match(slide9Xml, /90天执行安排/);
