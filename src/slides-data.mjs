@@ -442,7 +442,7 @@ export const slides = [
         <article class="pricing-card">
           <div class="pricing-card__price">30 万</div>
           <h3>平台交付</h3>
-          <p>交付 1 套可上线的视频生产平台，覆盖故事、脚本、keyframe 图片、clip 到成片视频的全流程。</p>
+          <p>交付 1 套可上线的教学短视频生产平台，覆盖故事、脚本、keyframe 图片、clip 到成片视频的全流程。</p>
           <p>价值是把批量生成、审核、版本管理和导出能力沉淀到内部。</p>
         </article>
         <article class="pricing-card">
@@ -455,7 +455,7 @@ export const slides = [
         <div class="decision-column">
           <div class="deliverable-box">
             <h3>总价、总交付与客户价值</h3>
-            <p>项目总价 90 万，最终交付给客户的是 1000 个视频、1 套可上线的视频生产平台，以及 1 套教研团队培训赋能方案。</p>
+            <p>项目总价 90 万，最终交付给客户的是 1000 个视频、1 套可上线的教学短视频生产平台，以及 1 套教研团队培训赋能方案。</p>
             <p>客户拿到的不只是阶段成品，也包括后续继续生产所需的平台能力、SOP、模板、参考样例和团队使用能力。</p>
           </div>
         </div>
