@@ -234,6 +234,9 @@ test('theme print styles keep each slide on a single 16:9 pdf page', () => {
   assert.match(css, /@media print[\s\S]*\.deck\s*{[\s\S]*display:\s*block;/);
   assert.match(css, /@media print[\s\S]*\.deck-slide\s*{[\s\S]*break-after:\s*page;[\s\S]*break-inside:\s*avoid;/);
   assert.match(css, /@media print[\s\S]*\.slide-shell\s*{[\s\S]*width:\s*100%;[\s\S]*height:\s*100%;[\s\S]*min-height:\s*unset;/);
+  assert.match(css, /@media print[\s\S]*\.case-grid\s*{[\s\S]*grid-template-columns:\s*repeat\(5,\s*minmax\(0,\s*1fr\)\);/);
+  assert.match(css, /@media print[\s\S]*\.goals-hero\s*{[\s\S]*grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/);
+  assert.match(css, /@media print[\s\S]*\.decision-grid\s*{[\s\S]*grid-template-columns:\s*1\.05fr\s+0\.95fr;/);
   assert.doesNotMatch(css, /@media print[\s\S]*width:\s*100vw/);
   assert.doesNotMatch(css, /@media print[\s\S]*min-height:\s*100vh/);
 });

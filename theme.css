@@ -861,4 +861,40 @@ li {
     border-radius: 0;
     box-shadow: none;
   }
+
+  .goals-hero {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .path-grid,
+  .compare-grid,
+  .member-grid,
+  .pricing-grid,
+  .timeline-grid,
+  .roi-grid,
+  .feature-grid--three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .feature-grid--four,
+  .pipeline-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .stat-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .case-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .solution-layout,
+  .platform-layout,
+  .training-layout,
+  .closing-layout,
+  .enablement-layout,
+  .decision-grid {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
 }
