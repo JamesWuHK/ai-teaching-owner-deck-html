@@ -84,8 +84,8 @@ const renderPathCards = () =>
       title: '传统外包',
       points: [
         '前期启动通常较顺，较容易先看到样片或阶段性成品。',
-        '传统视频公司按 1000 元/分钟计费，整体成本过百万。',
-        '仅交付视频，后续扩量、修改和维护继续付费。无法沉淀组织能力。',
+        '预算通常更偏项目制，随着交付规格提高，整体投入也会继续上升。',
+        '主要交付结果是成品内容，后续扩量、修改和维护仍依赖外部团队。',
       ],
     },
     {
@@ -144,28 +144,25 @@ const renderRoiCards = () =>
   [
     {
       title: '基于通用AI工具内部摸索',
-      price: '万+',
       points: [
         '90 天内需要同时补齐工具、流程、审核和生产稳定性，落地压力较大。',
-        '把组织学习和试错成本计入后，总成本未必低于传统外包。',
+        '隐性成本主要来自组织学习、反复试错和返工管理。',
         '主要不确定性在质量稳定性、交付节奏和成本波动。',
       ],
     },
     {
       title: '传统外包',
-      price: '100 万+',
       points: [
         '已有合作经验时，交付方式相对可预期。',
-        '能力沉淀在外部，后续新增或修改内容仍需持续采购。',
+        '更适合把需求按阶段外采，但能力沉淀仍在外部。',
         '项目结束后主要留下成品文件，内部能力提升有限。',
       ],
     },
     {
       title: '全栈解决方案',
-      price: '90 万',
       points: [
         '90 天内同步完成交付、平台和团队能力建设。',
-        '总投入 90 万，其中 60 万用于 1000 个视频交付，30 万用于平台开发。',
+        '投入对应的不只是当期内容生产，也包括后续复用的流程和系统能力。',
         '项目结束后，视频成果、平台能力和团队方法可以同时留在内部。',
       ],
     },
@@ -175,40 +172,10 @@ const renderRoiCards = () =>
         <article class="roi-card${item.title === '全栈解决方案' ? ' roi-card--highlight' : ''}">
           <div class="roi-card__head">
             <h3>${item.title}</h3>
-            <span>${item.price}</span>
           </div>
           <ul class="bullet-list bullet-list--compact">
             ${item.points.map((point) => `<li>${point}</li>`).join('')}
           </ul>
-        </article>
-      `,
-    )
-    .join('');
-
-const renderDecisionPricingCards = () =>
-  [
-    {
-      price: '60 万',
-      label: '1000 个教学短视频交付',
-      note: '60 万用于 1000 个视频交付，围绕 9 月节点完成业务可用成果。',
-    },
-    {
-      price: '30 万',
-      label: 'AI 教学短视频生产平台开发',
-      note: '30 万用于平台开发，支撑统一生产路径、审核闭环、版本控制和后续扩量能力。',
-    },
-    {
-      price: '已含',
-      label: '团队培训赋能支持',
-      note: '团队培训支持纳入项目实施范围，按人均 8000 元估算培训资源投入。',
-    },
-  ]
-    .map(
-      (item) => `
-        <article class="pricing-card">
-          <div class="pricing-card__price">${item.price}</div>
-          <h3>${item.label}</h3>
-          <p>${item.note}</p>
         </article>
       `,
     )
@@ -461,19 +428,16 @@ export const slides = [
   {
     number: '09',
     eyebrow: 'PLAN',
-    title: '报价与90天计划',
-    summary: '把投入结构和 90 天执行节奏拆开看，会更容易评估是否值得启动',
+    title: '90天计划',
+    summary: '把 90 天执行节奏和交付边界拆开看，会更容易评估实施安排是否合理',
     variant: 'decision',
     bodyHtml: `
       <div class="decision-grid">
         <div class="decision-column">
-          <div class="pricing-grid pricing-grid--compact">
-            ${renderDecisionPricingCards()}
-          </div>
           <div class="deliverable-box">
-            <h3>结论</h3>
-            <p>其中 60 万对应 1000 个视频交付，30 万对应平台开发，团队培训作为实施配套支持纳入项目范围。</p>
-            <p>这 90 万对应的，不只是一次性交付，也包括后续继续迭代所需的基础能力。</p>
+            <h3>交付边界</h3>
+            <p>这 90 天的重点，是把样片标准确认、批量生产稳定、平台上线和团队交接按顺序完成。</p>
+            <p>交付结果不只包括阶段成品，也包括后续继续迭代所需的基础能力。</p>
           </div>
         </div>
         <div class="decision-column">

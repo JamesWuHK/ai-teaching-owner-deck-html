@@ -8,6 +8,15 @@ import {execFileSync} from 'node:child_process';
 import {renderDeck, renderSlide} from '../src/render-deck.mjs';
 import {deckTitle, slides} from '../src/slides-data.mjs';
 
+const extractSlideHtml = (html, slideNumber) => {
+  const match = html.match(
+    new RegExp(`<section class="deck-slide[^"]*" id="slide-${slideNumber}">[\\s\\S]*?<\\/section>`),
+  );
+
+  assert.ok(match, `slide-${slideNumber} should exist`);
+  return match[0];
+};
+
 const sampleSlides = [
   {
     number: '01',
@@ -71,7 +80,7 @@ test('actual deck renders the approved 9-slide structure', () => {
   assert.match(html, /模块一：1000\+ 个视频如何稳定交付/);
   assert.match(html, /平台与团队赋能/);
   assert.match(html, /投入产出判断/);
-  assert.match(html, /报价与90天计划/);
+  assert.match(html, /90天计划/);
   assert.doesNotMatch(html, /<h1 class="slide-title">全栈解决方案<\/h1>/);
   assert.doesNotMatch(html, /<h1 class="slide-title">投入产出与落地计划<\/h1>/);
 });
@@ -116,21 +125,31 @@ test('actual deck combines platform capability and team enablement', () => {
 
 test('actual deck splits decision content into roi and plan pages', () => {
   const html = renderDeck({deckTitle, slides});
+  const slide03Html = extractSlideHtml(html, '03');
+  const slide08Html = extractSlideHtml(html, '08');
+  const slide09Html = extractSlideHtml(html, '09');
 
   assert.match(html, /投入产出判断/);
   assert.match(html, /基于通用AI工具内部摸索/);
   assert.match(html, /传统外包/);
   assert.match(html, /全栈解决方案/);
-  assert.match(html, /报价与90天计划/);
-  assert.match(html, /60 万/);
-  assert.match(html, /30 万/);
+  assert.match(html, /90天计划/);
   assert.match(html, /首批 200 个视频交付/);
   assert.match(html, /累计完成 1000 个视频交付/);
   assert.match(html, /平台正式上线/);
   assert.doesNotMatch(html, /平台 Alpha 上线/);
   assert.match(html, /后续继续迭代所需的基础能力/);
-  assert.match(html, /60 万用于 1000 个视频交付/);
-  assert.doesNotMatch(html, /60 万用于 1000\+ 个视频交付/);
+  assert.doesNotMatch(slide03Html, /1000 元\/分钟/);
+  assert.doesNotMatch(slide03Html, /过百万/);
+  assert.doesNotMatch(slide08Html, /万\+/);
+  assert.doesNotMatch(slide08Html, /100 万\+/);
+  assert.doesNotMatch(slide08Html, /90 万/);
+  assert.doesNotMatch(slide08Html, /60 万/);
+  assert.doesNotMatch(slide08Html, /30 万/);
+  assert.doesNotMatch(slide09Html, /报价与90天计划/);
+  assert.doesNotMatch(slide09Html, /60 万/);
+  assert.doesNotMatch(slide09Html, /30 万/);
+  assert.doesNotMatch(slide09Html, /团队培训支持纳入项目实施范围/);
 });
 
 test('project goals page merges goals with overall solution advice', () => {
@@ -172,10 +191,13 @@ test('pptx export creates an editable 9-slide deck with key business copy', asyn
   assert.match(slide8Xml, /投入产出判断/);
   assert.match(slide8Xml, /基于通用AI工具内部摸索/);
   assert.match(slide8Xml, /全栈解决方案/);
-  assert.match(slide9Xml, /60 万用于 1000 个视频交付/);
-  assert.match(slide9Xml, /30 万用于平台开发/);
+  assert.match(slide9Xml, /90天计划/);
   assert.match(slide9Xml, /首批 200 个视频交付/);
   assert.match(slide9Xml, /后续继续迭代所需的基础能力/);
+  assert.doesNotMatch(slide8Xml, /100 万\+/);
+  assert.doesNotMatch(slide8Xml, /90 万/);
+  assert.doesNotMatch(slide9Xml, /60 万用于 1000 个视频交付/);
+  assert.doesNotMatch(slide9Xml, /30 万用于平台开发/);
 });
 
 test('theme keeps the original 16:9-like desktop shell sizing and 1280px breakpoint', () => {
