@@ -811,12 +811,20 @@ li {
 
 @media print {
   @page {
-    size: landscape;
+    size: 16in 9in;
     margin: 0;
+  }
+
+  html,
+  body {
+    width: 16in;
+    height: 9in;
   }
 
   body {
     background: #ffffff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
   .deck-toolbar {
@@ -824,13 +832,25 @@ li {
   }
 
   .deck {
+    display: block;
     gap: 0;
+    margin: 0;
     padding: 0;
   }
 
   .deck-slide {
+    width: 16in;
+    height: 9in;
+    margin: 0;
     break-after: page;
+    break-inside: avoid;
     page-break-after: always;
+    page-break-inside: avoid;
+  }
+
+  .deck-slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
   }
 
   .deck-slide::before {
@@ -838,9 +858,11 @@ li {
   }
 
   .slide-shell {
-    width: 100vw;
-    min-height: 100vh;
-    padding: 28px 34px;
+    width: 100%;
+    height: 100%;
+    min-height: unset;
+    margin: 0;
+    padding: 0.35in 0.45in;
     border: none;
     border-radius: 0;
     box-shadow: none;

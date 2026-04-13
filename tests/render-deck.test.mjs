@@ -226,3 +226,14 @@ test('theme keeps the original 16:9-like desktop shell sizing and 1280px breakpo
   assert.match(css, /@media\s*\(max-width:\s*1280px\)/);
   assert.doesNotMatch(css, /aspect-ratio:\s*16\s*\/\s*10/);
 });
+
+test('theme print styles keep each slide on a single 16:9 pdf page', () => {
+  const css = fs.readFileSync(new URL('../theme.css', import.meta.url), 'utf8');
+
+  assert.match(css, /@page\s*{\s*size:\s*16in\s+9in;/);
+  assert.match(css, /@media print[\s\S]*\.deck\s*{[\s\S]*display:\s*block;/);
+  assert.match(css, /@media print[\s\S]*\.deck-slide\s*{[\s\S]*break-after:\s*page;[\s\S]*break-inside:\s*avoid;/);
+  assert.match(css, /@media print[\s\S]*\.slide-shell\s*{[\s\S]*width:\s*100%;[\s\S]*height:\s*100%;[\s\S]*min-height:\s*unset;/);
+  assert.doesNotMatch(css, /@media print[\s\S]*width:\s*100vw/);
+  assert.doesNotMatch(css, /@media print[\s\S]*min-height:\s*100vh/);
+});
