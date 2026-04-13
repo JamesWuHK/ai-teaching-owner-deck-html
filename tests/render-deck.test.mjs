@@ -125,10 +125,12 @@ test('actual deck splits decision content into roi and plan pages', () => {
   assert.match(html, /60 万/);
   assert.match(html, /30 万/);
   assert.match(html, /首批 200 个视频交付/);
-  assert.match(html, /累计完成 1000\+ 个视频交付/);
+  assert.match(html, /累计完成 1000 个视频交付/);
   assert.match(html, /平台正式上线/);
   assert.doesNotMatch(html, /平台 Alpha 上线/);
   assert.match(html, /后续继续迭代所需的基础能力/);
+  assert.match(html, /60 万用于 1000 个视频交付/);
+  assert.doesNotMatch(html, /60 万用于 1000\+ 个视频交付/);
 });
 
 test('project goals page merges goals with overall solution advice', () => {
@@ -170,7 +172,7 @@ test('pptx export creates an editable 9-slide deck with key business copy', asyn
   assert.match(slide8Xml, /投入产出判断/);
   assert.match(slide8Xml, /基于通用AI工具内部摸索/);
   assert.match(slide8Xml, /全栈解决方案/);
-  assert.match(slide9Xml, /60 万用于 1000\+ 个视频交付/);
+  assert.match(slide9Xml, /60 万用于 1000 个视频交付/);
   assert.match(slide9Xml, /30 万用于平台开发/);
   assert.match(slide9Xml, /首批 200 个视频交付/);
   assert.match(slide9Xml, /后续继续迭代所需的基础能力/);
