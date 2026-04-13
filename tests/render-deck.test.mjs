@@ -156,7 +156,7 @@ test('actual deck splits decision content into roi and plan pages', () => {
   assert.match(slide09Html, /视频交付/);
   assert.match(slide09Html, /平台交付/);
   assert.match(slide09Html, /培训赋能/);
-  assert.match(slide09Html, /1000 个教学短视频成品/);
+  assert.match(slide09Html, /1000 个教学短视频成品（1分钟左右）/);
   assert.match(slide09Html, /1 套可上线的教学短视频生产平台/);
   assert.match(slide09Html, /4～8 次课/);
   assert.match(slide09Html, /故事、脚本、keyframe 图片、clip 到成片视频/);
