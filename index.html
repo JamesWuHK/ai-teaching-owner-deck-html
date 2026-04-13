@@ -1,0 +1,1384 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 教学内容生产解决方案</title>
+    <style>:root {
+  --bg: #eaf1f6;
+  --bg-soft: #f7fafc;
+  --panel: rgba(255, 255, 255, 0.94);
+  --panel-strong: #ffffff;
+  --ink: #15263b;
+  --muted: #5c6f82;
+  --line: rgba(21, 38, 59, 0.12);
+  --accent: #5f86a8;
+  --accent-soft: #deebf5;
+  --support: #ca8d64;
+  --shadow: 0 24px 60px rgba(34, 54, 78, 0.12);
+  --radius-xl: 34px;
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --font-display: "Avenir Next", "Segoe UI", "PingFang SC", "Noto Sans SC", sans-serif;
+  --font-body: "SF Pro Text", "Helvetica Neue", "PingFang SC", "Noto Sans SC", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(circle at top left, rgba(95, 134, 168, 0.12), transparent 28%),
+    linear-gradient(180deg, #eff5f9 0%, #e6edf3 100%);
+}
+
+a {
+  color: inherit;
+}
+
+p,
+li {
+  line-height: 1.62;
+}
+
+.deck-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(240, 246, 251, 0.82);
+  backdrop-filter: blur(18px);
+}
+
+.deck-toolbar__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.deck-toolbar__label {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.deck-toolbar__brand strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.deck-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.deck-toolbar__actions button,
+.deck-toolbar__actions a {
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--ink);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.deck {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  padding: 28px 28px 42px;
+}
+
+.deck-slide {
+  position: relative;
+}
+
+.deck-slide::before {
+  content: "";
+  position: absolute;
+  inset: 18px 28px auto 28px;
+  height: 72%;
+  border-radius: 40px;
+  background: linear-gradient(135deg, rgba(95, 134, 168, 0.1), rgba(255, 255, 255, 0));
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.slide-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1360px, calc(100vw - 56px));
+  min-height: min(calc((100vw - 56px) * 0.5625), 768px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 24px;
+  padding: 36px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 249, 252, 0.96));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.slide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.slide-eyebrow,
+.slide-counter {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.slide-divider {
+  display: none;
+}
+
+.slide-headline {
+  display: grid;
+  gap: 14px;
+}
+
+.slide-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 2.3vw, 42px);
+  line-height: 1.18;
+  letter-spacing: -0.03em;
+}
+
+.slide-summary {
+  margin: 0;
+  max-width: 1000px;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.slide-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 0;
+}
+
+.intro-panel,
+.deliverable-box,
+.solution-summary,
+.training-copy,
+.platform-copy,
+.closing-copy,
+.member-card,
+.compare-card,
+.feature-card,
+.roi-card,
+.timeline-card,
+.pricing-card,
+.case-card,
+.training-proof {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: 0 16px 32px rgba(48, 76, 104, 0.06);
+}
+
+.intro-panel,
+.solution-summary,
+.training-copy,
+.platform-copy,
+.closing-copy,
+.deliverable-box {
+  padding: 22px 24px;
+}
+
+.intro-panel p,
+.solution-summary p,
+.training-copy p,
+.platform-copy p,
+.closing-copy p,
+.deliverable-box p {
+  margin: 0 0 12px;
+}
+
+.intro-panel p:last-child,
+.solution-summary p:last-child,
+.training-copy p:last-child,
+.platform-copy p:last-child,
+.closing-copy p:last-child,
+.deliverable-box p:last-child {
+  margin-bottom: 0;
+}
+
+.intro-panel--compact {
+  padding: 18px 22px;
+}
+
+.feature-grid,
+.compare-grid,
+.pricing-grid,
+.timeline-grid,
+.roi-grid,
+.member-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.goals-hero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.goal-pill,
+.path-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--panel);
+  box-shadow: 0 16px 32px rgba(48, 76, 104, 0.06);
+}
+
+.goal-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.goal-pill__label,
+.goal-path__label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.goal-pill h3,
+.path-card h3 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.goal-path {
+  display: grid;
+  gap: 14px;
+  padding: 20px 22px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(222, 235, 245, 0.42), rgba(255, 255, 255, 0.96));
+}
+
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.member-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.path-card {
+  display: flex;
+  align-items: center;
+  min-height: 112px;
+  padding: 18px 20px;
+}
+
+.member-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 20px;
+}
+
+.member-card__meta {
+  display: grid;
+  gap: 6px;
+}
+
+.member-card__role {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.member-card__name {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.member-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.feature-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-grid--four {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 20px;
+}
+
+.feature-card__index {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.feature-card h3,
+.compare-card h3,
+.pricing-card h3,
+.timeline-card h3,
+.roi-card h3,
+.deliverable-box h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.feature-card p,
+.compare-card p,
+.pricing-card p,
+.deliverable-box p,
+.roi-card p,
+.timeline-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.foot-note {
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(95, 134, 168, 0.08);
+  color: var(--ink);
+  font-size: 15px;
+}
+
+.cover-body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 18px;
+  min-height: 0;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 0;
+  border: 1px solid rgba(95, 134, 168, 0.16);
+  border-radius: 28px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fbfd 0%, #edf3f7 100%);
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+  pointer-events: none;
+}
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stat-chip {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.stat-chip__label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stat-chip strong {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.compare-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.compare-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px;
+}
+
+.compare-card:nth-child(3) {
+  background: linear-gradient(180deg, rgba(222, 235, 245, 0.66), rgba(255, 255, 255, 0.96));
+}
+
+.solution-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 18px;
+  min-height: 0;
+}
+
+.module-layout {
+  display: grid;
+  gap: 20px;
+}
+
+.pipeline-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.pipeline-step {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 76px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(180deg, #fbfdff, #f1f6fa);
+  font-weight: 600;
+  text-align: center;
+}
+
+.pipeline-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  width: 16px;
+  height: 1px;
+  background: rgba(95, 134, 168, 0.36);
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.case-card__thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.case-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+}
+
+.case-card__title-row {
+  display: grid;
+  gap: 4px;
+}
+
+.case-card__title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+.case-card__meta,
+.training-proof__meta p,
+.roi-card__head span,
+.timeline-card__month {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.case-card__note {
+  flex: 1;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.case-card__link,
+.training-proof__meta a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.platform-layout,
+.training-layout,
+.closing-layout,
+.enablement-layout,
+.decision-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 18px;
+  min-height: 0;
+}
+
+.decision-column {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.hero-visual--platform,
+.hero-visual--closing {
+  min-height: 290px;
+}
+
+.training-proof {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.training-proof img {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  display: block;
+}
+
+.training-proof__meta {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+}
+
+.training-proof__meta h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.roi-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.roi-grid--compact,
+.pricing-grid--compact,
+.timeline-grid--compact {
+  gap: 14px;
+}
+
+.roi-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 20px;
+}
+
+.roi-card--highlight {
+  background: linear-gradient(180deg, rgba(222, 235, 245, 0.72), rgba(255, 255, 255, 0.96));
+  border-color: rgba(95, 134, 168, 0.28);
+}
+
+.roi-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.roi-card__head span {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.roi-grid--compact .roi-card {
+  padding: 18px 16px;
+}
+
+.roi-grid--compact .roi-card__head span {
+  font-size: 20px;
+}
+
+.pricing-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+.pricing-card__price {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.pricing-grid--compact .pricing-card {
+  padding: 18px 16px;
+}
+
+.pricing-grid--compact .pricing-card__price {
+  font-size: 28px;
+}
+
+.timeline-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.timeline-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 20px;
+}
+
+.timeline-card__month {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.timeline-grid--compact .timeline-card {
+  padding: 18px 16px;
+}
+
+.closing-copy__highlight {
+  padding-top: 10px;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.bullet-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+  color: var(--ink);
+}
+
+.bullet-list--compact {
+  gap: 6px;
+  font-size: 14px;
+}
+
+@media (max-width: 1280px) {
+  .slide-shell {
+    width: calc(100vw - 40px);
+    padding: 30px;
+  }
+
+  .feature-grid--four,
+  .case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .platform-layout,
+  .training-layout,
+  .closing-layout,
+  .enablement-layout,
+  .decision-grid,
+  .solution-layout,
+  .goals-hero,
+  .member-grid,
+  .path-grid,
+  .compare-grid,
+  .pricing-grid,
+  .timeline-grid,
+  .roi-grid,
+  .feature-grid--three {
+    grid-template-columns: 1fr;
+  }
+
+  .pipeline-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .deck-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .deck {
+    padding: 20px;
+    gap: 24px;
+  }
+
+  .slide-shell {
+    width: 100%;
+    min-height: unset;
+    padding: 24px 20px;
+  }
+
+  .slide-title {
+    font-size: 28px;
+  }
+
+  .slide-summary {
+    font-size: 16px;
+  }
+
+  .pipeline-row,
+  .stat-strip,
+  .feature-grid--four,
+  .feature-grid--three,
+  .case-grid,
+  .member-grid,
+  .pricing-grid--compact,
+  .timeline-grid--compact {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .deck-toolbar {
+    display: none;
+  }
+
+  .deck {
+    gap: 0;
+    padding: 0;
+  }
+
+  .deck-slide {
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .deck-slide::before {
+    display: none;
+  }
+
+  .slide-shell {
+    width: 100vw;
+    min-height: 100vh;
+    padding: 28px 34px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+</style>
+  </head>
+  <body>
+    <div class="deck-toolbar">
+      <div class="deck-toolbar__brand">
+        <span class="deck-toolbar__label">Visual Draft</span>
+        <strong>AI 教学内容生产解决方案</strong>
+      </div>
+      <div class="deck-toolbar__actions">
+        <button id="print-deck" type="button">打印 / 导出 PDF</button>
+        <a href="#slide-01">回到第一页</a>
+      </div>
+    </div>
+    <main class="deck">
+      
+    <section class="deck-slide deck-slide--cover" id="slide-01">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">COVER</div>
+          <div class="slide-counter">01 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">走向未来教学短视频 AI 全栈解决方案：90天｜1000+个视频｜1个AI平台｜1个AI团队</h1>
+          <p class="slide-summary">围绕业务交付与后续能力建设，提供一套可执行的 AI 教学内容生产方案</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="cover-body">
+        <figure class="hero-visual hero-visual--cover">
+          <img src="assets/generated/cover-hero-light-v1.png" alt="走向未来教学短视频 AI 全栈解决方案" />
+        </figure>
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--goals" id="slide-02">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">PROJECT GOALS</div>
+          <div class="slide-counter">02 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">项目目标与总体建议</h1>
+          <p class="slide-summary">项目判断标准可以概括为两点：既要按节点交付，也要把后续生产能力留在内部</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="goals-hero">
+        <article class="goal-pill">
+          <span class="goal-pill__label">目标 1</span>
+          <h3>9 月前完成 1000+ 个教学短视频交付</h3>
+        </article>
+        <article class="goal-pill">
+          <span class="goal-pill__label">目标 2</span>
+          <h3>让内容生产能力真正进入 AI 时代</h3>
+        </article>
+      </div>
+      <div class="intro-panel intro-panel--compact">
+        <p>如果这次只解决短期交付，后续扩量、返修和新增内容，仍然会继续依赖外部。</p>
+        <p>在当前时间窗口下，更稳妥的做法不是只解决交付，而是把交付、平台沉淀和团队接手一起安排。</p>
+      </div>
+      <div class="feature-grid feature-grid--three">
+        
+        <article class="feature-card">
+          <div class="feature-card__index">01</div>
+          <h3>1000+ 个教学短视频交付</h3>
+          <p>围绕 9 月节点，先确保业务侧有稳定可用的成果。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">02</div>
+          <h3>1 个 AI 视频生产平台</h3>
+          <p>把脚本、分镜、素材、审核和版本控制沉淀成统一流程。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">03</div>
+          <h3>1 个 AI 赋能的团队</h3>
+          <p>让教研团队后续能接手生产、复核和持续迭代。</p>
+        </article>
+      
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--comparison" id="slide-03">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">PATH COMPARISON</div>
+          <div class="slide-counter">03 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">路径对比</h1>
+          <p class="slide-summary">三条路径都可以启动，但在 90 天窗口下，成本、风险和后续控制力差异明显</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="intro-panel intro-panel--compact">
+        <p>如果只看能不能开始做，三条路径都成立；如果把时间、风险和后续维护一起算进去，差别就会比较清楚。</p>
+      </div>
+      <div class="compare-grid">
+        
+        <article class="compare-card">
+          <h3>内部摸索</h3>
+          <ul class="bullet-list">
+            <li>可以基于通用 AI 工具先启动，适合用于样片验证和小规模试做。</li><li>真正难点不在于单条产出，而在于效率、良率和一致性，学习成本和试错成本都较高。</li><li>如果缺少工程化经验，质量、进度和成本的波动会比较大。</li>
+          </ul>
+        </article>
+      
+        <article class="compare-card">
+          <h3>传统外包</h3>
+          <ul class="bullet-list">
+            <li>前期启动通常较顺，较容易先看到样片或阶段性成品。</li><li>传统视频公司按 1000 元/分钟计费，整体成本过百万。</li><li>仅交付视频，后续扩量、修改和维护继续付费。无法沉淀组织能力。</li>
+          </ul>
+        </article>
+      
+        <article class="compare-card">
+          <h3>全栈解决方案</h3>
+          <ul class="bullet-list">
+            <li>把阶段交付、平台沉淀和团队接手放在同一项目里安排。</li><li>当前交付和后续迭代能力可以同步留在内部。</li><li>更适合这次既看节点交付、也看后续控制力的目标。</li>
+          </ul>
+        </article>
+      
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--team" id="slide-04">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">TEAM</div>
+          <div class="slide-counter">04 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">北京智理科技有限公司核心成员</h1>
+          <p class="slide-summary">成员背景涵盖教育内容、技术平台与项目实施</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="intro-panel intro-panel--compact">
+        <p>这一页主要说明参与本次方案判断和交付设计的人员背景。</p>
+      </div>
+      <div class="member-grid">
+        
+        <article class="member-card">
+          <div class="member-card__meta">
+            <span class="member-card__role">创始人</span>
+            <h3 class="member-card__name">武宁</h3>
+          </div>
+          <p>清华软件学院毕业，前好未来励步英语 IT 负责人，前东方剑桥教育集团 CTO，中国教育技术协会 AI 专家。</p>
+        </article>
+      
+        <article class="member-card">
+          <div class="member-card__meta">
+            <span class="member-card__role">核心成员</span>
+            <h3 class="member-card__name">黄炜</h3>
+          </div>
+          <p>前新东方多纳英语产研总监，长期负责少儿英语产品与内容生产体系建设。</p>
+        </article>
+      
+        <article class="member-card">
+          <div class="member-card__meta">
+            <span class="member-card__role">核心成员</span>
+            <h3 class="member-card__name">颜久菁</h3>
+          </div>
+          <p>豆神大语文产品总监，熟悉内容产品设计、课程表达与教学产品化。</p>
+        </article>
+      
+      </div>
+      <div class="foot-note">这些背景信息主要用于说明，本次建议并不是单一技术视角，而是结合内容、产品和实施经验形成的。</div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--cases" id="slide-05">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">CASE PROOF</div>
+          <div class="slide-counter">05 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">案例视频</h1>
+          <p class="slide-summary">以下案例主要用于说明当前已经验证过的样本和产线能力</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="case-grid">
+        
+        <article class="case-card">
+          <img class="case-card__thumb" src="assets/cases/case-01.png" alt="案例视频 01" />
+          <div class="case-card__body">
+            <div class="case-card__title-row">
+              <h3 class="case-card__title">案例视频 01</h3>
+              <span class="case-card__meta">125.0 秒 ｜ 960×544</span>
+            </div>
+            <p class="case-card__note">较长时长内容下的节奏稳定性与信息承载能力。</p>
+            <a class="case-card__link" href="assets/cases/case-01.mp4" target="_blank" rel="noreferrer">打开案例视频</a>
+          </div>
+        </article>
+      
+        <article class="case-card">
+          <img class="case-card__thumb" src="assets/cases/case-02.png" alt="案例视频 02" />
+          <div class="case-card__body">
+            <div class="case-card__title-row">
+              <h3 class="case-card__title">案例视频 02</h3>
+              <span class="case-card__meta">140.1 秒 ｜ 960×544</span>
+            </div>
+            <p class="case-card__note">长内容链路中的角色统一、镜头衔接与表达完整度。</p>
+            <a class="case-card__link" href="assets/cases/case-02.mp4" target="_blank" rel="noreferrer">打开案例视频</a>
+          </div>
+        </article>
+      
+        <article class="case-card">
+          <img class="case-card__thumb" src="assets/cases/case-03.png" alt="案例视频 03" />
+          <div class="case-card__body">
+            <div class="case-card__title-row">
+              <h3 class="case-card__title">案例视频 03</h3>
+              <span class="case-card__meta">52.9 秒 ｜ 1280×720</span>
+            </div>
+            <p class="case-card__note">单支内容的画面质感与基础生产稳定性。</p>
+            <a class="case-card__link" href="assets/cases/case-03.mp4" target="_blank" rel="noreferrer">打开案例视频</a>
+          </div>
+        </article>
+      
+        <article class="case-card">
+          <img class="case-card__thumb" src="assets/cases/case-04.png" alt="案例视频 04" />
+          <div class="case-card__body">
+            <div class="case-card__title-row">
+              <h3 class="case-card__title">案例视频 04</h3>
+              <span class="case-card__meta">92.1 秒 ｜ 1280×704</span>
+            </div>
+            <p class="case-card__note">较完整的教学表达链路与场景切换控制。</p>
+            <a class="case-card__link" href="assets/cases/case-04.mp4" target="_blank" rel="noreferrer">打开案例视频</a>
+          </div>
+        </article>
+      
+        <article class="case-card">
+          <img class="case-card__thumb" src="assets/cases/case-05.png" alt="案例视频 05" />
+          <div class="case-card__body">
+            <div class="case-card__title-row">
+              <h3 class="case-card__title">案例视频 05</h3>
+              <span class="case-card__meta">67.8 秒 ｜ 1280×704</span>
+            </div>
+            <p class="case-card__note">角色风格一致性和多镜头条件下的可控性。</p>
+            <a class="case-card__link" href="assets/cases/case-05.mp4" target="_blank" rel="noreferrer">打开案例视频</a>
+          </div>
+        </article>
+      
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--module" id="slide-06">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">MODULE 1</div>
+          <div class="slide-counter">06 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">模块一：1000+ 个视频如何稳定交付</h1>
+          <p class="slide-summary">难点不是做出样片，而是在 1000+ 个规模下保持稳定性、一致性和教学适配性</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="module-layout">
+        <div class="intro-panel">
+          <p>样片能不能做出来，不是这次项目真正的难点。</p>
+          <p>真正的难点是当目标变成 1000+ 个视频时，批量生产情况下能不能保持角色一致、风格一致、节奏一致，并且始终贴合现有教学体系。</p>
+          <p>相比个别出彩的视频，更重要的是把原本高度依赖人工协作的流程，压缩成可控的标准化流程。</p>
+        </div>
+        <div class="pipeline-row">
+          <div class="pipeline-step">课程内容</div>
+          <div class="pipeline-step">视频脚本</div>
+          <div class="pipeline-step">分镜设计</div>
+          <div class="pipeline-step">视频输出</div>
+          <div class="pipeline-step">审核验收</div>
+        </div>
+        <div class="feature-grid feature-grid--four">
+          
+        <article class="feature-card">
+          <div class="feature-card__index">01</div>
+          <h3>生产链路可控</h3>
+          <p>课程内容-视频脚本-分镜设计-视频输出-审核验收必须形成统一工程链路。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">02</div>
+          <h3>AI 与人工协同</h3>
+          <p>AI 和人工结合的过程控制要能支撑 1000+ 个规模下的批量生产稳定性。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">03</div>
+          <h3>风格和角色一致</h3>
+          <p>角色、风格、节奏需要长期稳定，不能在规模上来后明显漂移。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">04</div>
+          <h3>教学体系适配</h3>
+          <p>输出必须贴合现有课程体系，而不是只追求画面层面的“像样”。</p>
+        </article>
+      
+        </div>
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--enablement" id="slide-07">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">ENABLEMENT</div>
+          <div class="slide-counter">07 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">平台与团队赋能</h1>
+          <p class="slide-summary">平台侧负责流程控制与资产沉淀，团队侧负责后续接手和持续维护</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="enablement-layout">
+        <article class="platform-copy">
+          <p>1000+ 个视频的交付，不适合依赖零散工具和人工协作拼接完成；脚本、分镜、素材调用、批量生成、审核验收和版本管理，需要进入同一条可控链路。</p>
+          <p>平台真正要沉淀下来的，不只是生产动作本身，还包括人物一致性、品牌视觉风格、常用提示词模板和 AI 辅助质检这些可复用能力。</p>
+        </article>
+        <article class="training-proof">
+          <img src="assets/training/editor-aigc-training-outline.png" alt="编辑人员AI应用技能内部培训提纲" />
+          <div class="training-proof__meta">
+            <h3>编辑人员AI应用技能内部培训提纲</h3>
+            <p>平台可以沉淀方法，但后续能不能长期运转，仍然取决于教研团队是否具备基本的 AI 协同生产能力。</p>
+            <ul class="bullet-list bullet-list--compact">
+              <li>过去给出版社编辑做的 AIGC 培训提纲。</li>
+              <li>培训主题覆盖文生图、图生图、图生视频、Agent 等关键能力。</li>
+            </ul>
+            <a href="assets/training/editor-aigc-training-outline.pdf" target="_blank" rel="noreferrer">打开培训提纲 PDF</a>
+          </div>
+        </article>
+      </div>
+      <div class="feature-grid feature-grid--four">
+        
+        <article class="feature-card">
+          <div class="feature-card__index">01</div>
+          <h3>任务流编排</h3>
+          <p>课程内容到视频输出的统一流程，减少人工断点和重复沟通。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">02</div>
+          <h3>批量生成控制</h3>
+          <p>多视频并行生产、队列管理与进度追踪，让大批量任务在同一系统里被稳定管理。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">03</div>
+          <h3>风格资产沉淀</h3>
+          <p>把人物一致性、品牌视觉风格和常用提示词模板固定下来，保证输出长期稳定。</p>
+        </article>
+      
+        <article class="feature-card">
+          <div class="feature-card__index">04</div>
+          <h3>AI 辅助质检</h3>
+          <p>对画面、文案和镜头一致性做 AI + 人工复核，形成可追踪的返修闭环。</p>
+        </article>
+      
+      </div>
+      <div class="foot-note">平台侧解决流程稳定性，团队侧解决后续接手和持续使用。</div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--decision" id="slide-08">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">DECISION</div>
+          <div class="slide-counter">08 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">投入产出判断</h1>
+          <p class="slide-summary">三条路径都能启动，但从确定性、成本结构和后续控制力看，结论并不相同</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="roi-grid roi-grid--compact">
+        
+        <article class="roi-card">
+          <div class="roi-card__head">
+            <h3>基于通用AI工具内部摸索</h3>
+            <span>万+</span>
+          </div>
+          <ul class="bullet-list bullet-list--compact">
+            <li>90 天内需要同时补齐工具、流程、审核和生产稳定性，落地压力较大。</li><li>把组织学习和试错成本计入后，总成本未必低于传统外包。</li><li>主要不确定性在质量稳定性、交付节奏和成本波动。</li>
+          </ul>
+        </article>
+      
+        <article class="roi-card">
+          <div class="roi-card__head">
+            <h3>传统外包</h3>
+            <span>100 万+</span>
+          </div>
+          <ul class="bullet-list bullet-list--compact">
+            <li>已有合作经验时，交付方式相对可预期。</li><li>能力沉淀在外部，后续新增或修改内容仍需持续采购。</li><li>项目结束后主要留下成品文件，内部能力提升有限。</li>
+          </ul>
+        </article>
+      
+        <article class="roi-card roi-card--highlight">
+          <div class="roi-card__head">
+            <h3>全栈解决方案</h3>
+            <span>90 万</span>
+          </div>
+          <ul class="bullet-list bullet-list--compact">
+            <li>90 天内同步完成交付、平台和团队能力建设。</li><li>总投入 90 万，其中 60 万用于 1000+ 个视频交付，30 万用于平台开发。</li><li>项目结束后，视频成果、平台能力和团队方法可以同时留在内部。</li>
+          </ul>
+        </article>
+      
+      </div>
+      <div class="deliverable-box">
+        <h3>判断结论</h3>
+        <p>如果只看启动难度，三条路径都能开始；如果把节点交付、后续维护和能力沉淀一起看，全栈方案相对更均衡。</p>
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+
+    <section class="deck-slide deck-slide--decision" id="slide-09">
+      <div class="slide-shell">
+        <header class="slide-header">
+          <div class="slide-eyebrow">PLAN</div>
+          <div class="slide-counter">09 / 09</div>
+        </header>
+        <div class="slide-divider"></div>
+        <div class="slide-headline">
+          <h1 class="slide-title">报价与90天计划</h1>
+          <p class="slide-summary">把投入结构和 90 天执行节奏拆开看，会更容易评估是否值得启动</p>
+        </div>
+        <div class="slide-body">
+          
+      <div class="decision-grid">
+        <div class="decision-column">
+          <div class="pricing-grid pricing-grid--compact">
+            
+        <article class="pricing-card">
+          <div class="pricing-card__price">60 万</div>
+          <h3>1000+ 个教学短视频交付</h3>
+          <p>60 万用于 1000+ 个视频交付，围绕 9 月节点完成业务可用成果。</p>
+        </article>
+      
+        <article class="pricing-card">
+          <div class="pricing-card__price">30 万</div>
+          <h3>AI 教学短视频生产平台开发</h3>
+          <p>30 万用于平台开发，支撑统一生产路径、审核闭环、版本控制和后续扩量能力。</p>
+        </article>
+      
+        <article class="pricing-card">
+          <div class="pricing-card__price">已含</div>
+          <h3>团队培训赋能支持</h3>
+          <p>团队培训支持纳入项目实施范围，按人均 8000 元估算培训资源投入。</p>
+        </article>
+      
+          </div>
+          <div class="deliverable-box">
+            <h3>结论</h3>
+            <p>其中 60 万对应 1000+ 个视频交付，30 万对应平台开发，团队培训作为实施配套支持纳入项目范围。</p>
+            <p>这 90 万对应的，不只是一次性交付，也包括后续继续迭代所需的基础能力。</p>
+          </div>
+        </div>
+        <div class="decision-column">
+          <div class="timeline-grid timeline-grid--compact">
+            
+        <article class="timeline-card">
+          <div class="timeline-card__month">第 1 月</div>
+          <ul class="bullet-list bullet-list--compact">
+            <li>完成样片标准确认。</li><li>跑通生产路径和审核闭环。</li><li>完成平台核心流程开发与联调。</li><li>首批 200 个视频交付。</li>
+          </ul>
+        </article>
+      
+        <article class="timeline-card">
+          <div class="timeline-card__month">第 2 月</div>
+          <ul class="bullet-list bullet-list--compact">
+            <li>进入稳定批量生产阶段。</li><li>固化关键流程和风格控制标准。</li><li>累计完成 650 个视频交付。</li><li>稳定日产能达到 12-15 个。</li>
+          </ul>
+        </article>
+      
+        <article class="timeline-card">
+          <div class="timeline-card__month">第 3 月</div>
+          <ul class="bullet-list bullet-list--compact">
+            <li>完成剩余内容和重点返修。</li><li>平台正式上线，完成系统移交和团队实操培训。</li><li>累计完成 1000+ 个视频交付。</li><li>沉淀 1 套 SOP。</li>
+          </ul>
+        </article>
+      
+          </div>
+          <div class="foot-note">项目结束后，内部保留的不只是 1000+ 个视频，也包括 1 个 AI 平台和 1 支具备 AI 协同能力的团队。</div>
+        </div>
+      </div>
+    
+        </div>
+      </div>
+    </section>
+  
+    </main>
+    <script>
+  const printButton = document.getElementById('print-deck');
+  if (printButton) {
+    printButton.addEventListener('click', () => window.print());
+  }
+</script>
+  </body>
+</html>
